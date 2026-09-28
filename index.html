@@ -2,391 +2,304 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>TACTICAL ARENA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SOUHAIL ALAOUI | ACCESS</title>
 <style>
-:root{--acc:#ff3b3b;--acc2:#3bd1ff;}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
-html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:Arial,sans-serif;color:#fff;
-  padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);}
-#c{position:fixed;inset:0;display:block;}
-.ov{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:linear-gradient(160deg,#0b1620,#1a2733);text-align:center;gap:18px;padding:20px;}
-.hide{display:none!important;}
-h1{font-size:38px;letter-spacing:4px;color:var(--acc);text-shadow:0 0 20px rgba(255,59,59,.6);}
-h1 span{color:var(--acc2);}
-.btn{font-size:16px;letter-spacing:2px;background:rgba(255,255,255,.08);border:2px solid var(--acc2);color:#fff;
-  padding:14px 40px;border-radius:8px;cursor:pointer;}
-.btn:active{background:var(--acc2);color:#0b1620;}
-.small{font-size:12px;color:#9fb4c2;max-width:320px;line-height:1.6;}
-#hud{position:fixed;inset:0;z-index:10;pointer-events:none;font-family:Arial,sans-serif;}
-#top{position:absolute;top:calc(12px + env(safe-area-inset-top,0));left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;}
-.bars{background:rgba(0,0,0,.35);border-radius:8px;padding:8px 12px;min-width:160px;}
-.barlbl{font-size:10px;color:#ccc;margin-bottom:3px;}
-.barwrap{width:100%;height:9px;background:#222;border-radius:5px;overflow:hidden;margin-bottom:6px;}
-#hpbar{height:100%;background:linear-gradient(90deg,#ff3b3b,#ff8a3b);width:100%;}
-.ammo{background:rgba(0,0,0,.35);border-radius:8px;padding:8px 14px;font-size:18px;font-weight:bold;text-align:center;}
-.kills{background:rgba(0,0,0,.35);border-radius:8px;padding:8px 14px;font-size:13px;text-align:center;}
-#cross{position:absolute;top:50%;left:50%;width:22px;height:22px;transform:translate(-50%,-50%);pointer-events:none;}
-#cross::before,#cross::after{content:'';position:absolute;background:#fff;}
-#cross::before{width:2px;height:22px;left:10px;}
-#cross::after{width:22px;height:2px;top:10px;}
-#joyzone{position:absolute;left:0;bottom:0;width:45%;height:55%;pointer-events:auto;}
-#joybase{position:absolute;width:100px;height:100px;border:2px solid rgba(255,255,255,.5);border-radius:50%;
-  background:rgba(255,255,255,.08);display:none;}
-#joyknob{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.6);
-  top:28px;left:28px;}
-#camzone{position:absolute;right:0;top:0;width:100%;height:75%;pointer-events:auto;}
-#rbtns{position:absolute;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0));display:flex;flex-direction:column;align-items:flex-end;gap:10px;pointer-events:auto;}
-.row{display:flex;gap:10px;}
-.cb{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.5);
-  display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;}
-.cb:active{background:rgba(255,255,255,.4);}
-#fireBtn{width:76px;height:76px;font-size:24px;background:rgba(255,59,59,.35);border-color:var(--acc);}
-#fireBtn:active{background:rgba(255,59,59,.7);}
-#aimBtn.active{background:rgba(59,209,255,.55);}
-#msg{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);text-align:center;color:#fff;font-size:13px;
-  background:rgba(0,0,0,.4);padding:8px 18px;border-radius:8px;opacity:0;transition:opacity .3s;}
+:root{
+  --bg:#050505; --red:#ff2a2a; --yellow:#ffc933; --ok:#3dff8a;
+  --text:#f1ecec; --dim:#8a8484; --accent:var(--red);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  background:var(--bg);color:var(--text);overflow:hidden;
+  font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
+}
+body.unlocked{--accent:var(--ok);}
+.mono{font-family:ui-monospace,"SF Mono",Consolas,monospace;letter-spacing:.18em;}
+
+/* ---------- background fx ---------- */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.glow{
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 45%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 70%),
+    radial-gradient(ellipse 30% 25% at 85% 100%,rgba(255,201,51,.12),transparent 70%);
+  animation:pulse 5s ease-in-out infinite;
+}
+.scan{background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px);opacity:.6;}
+.vignette{background:radial-gradient(ellipse at center,transparent 45%,#000 100%);z-index:1;}
+@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;z-index:100;background:#000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:26px;transition:opacity .6s,visibility .6s;}
+#loader.done{opacity:0;visibility:hidden;}
+.ring{width:64px;height:64px;border-radius:50%;border:3px solid #222;border-top-color:var(--yellow);
+  border-right-color:var(--red);animation:spin 1s linear infinite;}
+#loader p{font-size:12px;color:var(--dim);}
+.dots::after{content:'';animation:dots 1.2s steps(4) infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%,100%{content:'...'}}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed;top:0;inset-inline:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(14px + env(safe-area-inset-top,0)) 18px 14px;}
+.status{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--accent);
+  padding:8px 14px;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:100px;
+  background:rgba(0,0,0,.5);transition:color .4s,border-color .4s;}
+.led{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 1.4s infinite;}
+body.unlocked .led{animation:none;}
+@keyframes blink{50%{opacity:.25}}
+
+.icon-btn{width:44px;height:44px;border-radius:12px;border:1px solid #333;background:rgba(255,255,255,.04);
+  color:var(--text);font-size:18px;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;}
+.icon-btn:hover{border-color:var(--accent);}
+/* locked: icons look disabled and show a lock instead */
+body.locked .icon-btn{color:#5a5252;border-style:dashed;background:rgba(255,42,42,.06);}
+body.locked .icon-btn .ico{font-size:0;}
+body.locked .icon-btn .ico::before{content:'🔒';font-size:16px;filter:grayscale(1);}
+body.unlocked #exitBtn{border-color:var(--ok);color:var(--ok);box-shadow:0 0 14px rgba(61,255,138,.35);}
+
+/* ---------- stage ---------- */
+.stage{position:relative;z-index:5;height:100%;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:90px 22px 40px;gap:20px;}
+.name{font-size:clamp(34px,9vw,92px);font-weight:900;letter-spacing:.06em;line-height:1.1;position:relative;
+  direction:ltr;text-shadow:0 0 28px color-mix(in srgb,var(--accent) 55%,transparent);
+  animation:flicker 6s infinite,rise 1.2s ease both;}
+.name::before,.name::after{content:attr(data-text);position:absolute;inset:0;opacity:.6;mix-blend-mode:screen;}
+.name::before{color:var(--yellow);animation:glitch1 4s infinite steps(1);}
+.name::after{color:var(--red);animation:glitch2 4s infinite steps(1);}
+body.unlocked .name::before,body.unlocked .name::after{display:none;}
+@keyframes rise{from{opacity:0;transform:translateY(20px) scale(.97);filter:blur(8px)}}
+@keyframes flicker{0%,92%,100%{opacity:1}93%{opacity:.6}94%{opacity:1}96%{opacity:.75}}
+@keyframes glitch1{0%,90%,100%{transform:none;clip-path:inset(0 0 0 0)}92%{transform:translate(-4px,0);clip-path:inset(20% 0 55% 0)}95%{transform:translate(3px,0);clip-path:inset(60% 0 10% 0)}}
+@keyframes glitch2{0%,90%,100%{transform:none;clip-path:inset(0 0 0 0)}93%{transform:translate(4px,0);clip-path:inset(45% 0 30% 0)}96%{transform:translate(-3px,0);clip-path:inset(5% 0 75% 0)}}
+
+.tag{font-size:clamp(10px,2.6vw,13px);color:var(--dim);}
+
+.box{display:flex;gap:10px;width:min(440px,100%);margin-top:14px;padding:8px;border-radius:16px;
+  background:rgba(10,10,10,.75);border:1px solid #2b2b2b;backdrop-filter:blur(10px);
+  transition:border-color .3s,box-shadow .3s;}
+.box:focus-within{border-color:var(--accent);box-shadow:0 0 22px color-mix(in srgb,var(--accent) 30%,transparent);}
+.box input{flex:1;min-width:0;background:transparent;border:none;outline:none;color:var(--text);
+  padding:14px 14px;font-size:16px;letter-spacing:.2em;font-family:ui-monospace,Consolas,monospace;}
+.box input::placeholder{color:#544e4e;letter-spacing:.2em;font-size:12px;}
+.enter{border:none;border-radius:11px;padding:0 24px;font-weight:800;font-size:15px;cursor:pointer;
+  background:linear-gradient(135deg,var(--yellow),var(--red));color:#180404;transition:transform .15s,filter .2s;}
+.enter:hover{filter:brightness(1.1);}
+.enter:active{transform:scale(.96);}
+body.unlocked .enter{background:linear-gradient(135deg,#8dffbd,var(--ok));}
+.box.shake{animation:shake .5s;border-color:var(--red);}
+@keyframes shake{10%,90%{transform:translateX(-3px)}20%,80%{transform:translateX(6px)}30%,50%,70%{transform:translateX(-10px)}40%,60%{transform:translateX(10px)}}
+
+.msg{min-height:24px;font-size:14px;font-weight:700;color:var(--red);}
+.msg.ok{color:var(--ok);}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom,0));z-index:60;
+  transform:translate(-50%,30px);opacity:0;pointer-events:none;max-width:90vw;
+  background:#180606;border:1px solid var(--red);color:#ffdada;padding:14px 22px;border-radius:12px;
+  font-size:14px;font-weight:700;box-shadow:0 0 30px rgba(255,42,42,.35);transition:all .35s;}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+.toast.good{background:#06180d;border-color:var(--ok);color:#d6ffe6;box-shadow:0 0 30px rgba(61,255,138,.3);}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;}}
+@media (max-width:520px){.enter{padding:0 18px;}.status{font-size:10px;padding:7px 11px;}}
+
+/* ---------- mobile exit-gesture hardening (in-page only) ---------- */
+html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+input{-webkit-user-select:text;user-select:text;}
+
 </style>
 </head>
-<body>
-<canvas id="c"></canvas>
+<body class="locked">
 
-<div class="ov" id="menu">
-  <h1>TACTICAL<br><span>ARENA</span></h1>
-  <div class="small">لعبة تصويب من منظور الشخص الثالث. اقض على كل الأعداء المنتشرين في الخريطة قبل أن ينفد صبرك.</div>
-  <button class="btn" id="playBtn">PLAY</button>
-  <button class="btn" id="howBtn" style="font-size:13px;padding:10px 26px;">HOW TO PLAY</button>
-  <div class="small" id="howText" style="display:none;">
-    يسار الشاشة: جويستيك للحركة. يمين الشاشة: اسحب لتدوير الكاميرا.
-    الأزرار: 🎯 تصويب، 🔫 إطلاق نار، ⤴ قفز، ⬇ انحناء، 🔄 إعادة تلقيم.
-    على الكمبيوتر: WASD للحركة، اسحب بالفأرة لتدوير الكاميرا، Shift للركض، Space للقفز.
-  </div>
-</div>
+<div id="loader"><div class="ring"></div><p class="mono">INITIALIZING<span class="dots"></span></p></div>
 
-<div class="ov hide" id="endScreen">
-  <h1 id="endTitle">VICTORY</h1>
-  <div class="small" id="endText"></div>
-  <button class="btn" id="restartBtn">RESTART</button>
-</div>
+<div class="fx glow"></div>
+<div class="fx scan"></div>
+<div class="fx vignette"></div>
 
-<div id="hud" class="hide">
-  <div id="top">
-    <div class="bars">
-      <div class="barlbl">HEALTH</div>
-      <div class="barwrap"><div id="hpbar"></div></div>
-      <div class="kills" id="killCount">Kills: 0/6</div>
-    </div>
-    <div class="ammo" id="ammoTxt">30/120</div>
-  </div>
-  <div id="cross"></div>
-  <div id="msg"></div>
-  <div id="joyzone"><div id="joybase"><div id="joyknob"></div></div></div>
-  <div id="camzone"></div>
-  <div id="rbtns">
-    <div class="row">
-      <div class="cb" id="jumpBtn">⤴</div>
-      <div class="cb" id="crouchBtn">⬇</div>
-      <div class="cb" id="reloadBtn">🔄</div>
-    </div>
-    <div class="row">
-      <div class="cb" id="aimBtn">🎯</div>
-      <div class="cb" id="fireBtn">🔫</div>
-    </div>
-  </div>
-</div>
+<header class="topbar">
+  <button class="icon-btn" id="backBtn" aria-label="رجوع"><span class="ico">←</span></button>
+  <div class="status mono" id="status"><i class="led"></i><span id="statusTxt">ACCESS LOCKED</span></div>
+  <button class="icon-btn" id="exitBtn" aria-label="خروج"><span class="ico">✕</span></button>
+</header>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<main class="stage">
+  <h1 class="name" data-text="SOUHAIL ALAOUI">SOUHAIL ALAOUI</h1>
+  <p class="tag mono" id="tag">RESTRICTED AREA — AUTHORIZATION REQUIRED</p>
+
+  <form class="box" id="form" autocomplete="off" novalidate>
+    <input id="pw" type="password" placeholder="ENTER PASSWORD" dir="ltr" autocomplete="off" spellcheck="false">
+    <button type="submit" id="enterBtn" class="enter">دخول</button>
+  </form>
+
+  <p class="msg" id="msg" role="alert"></p>
+</main>
+
+<div class="toast" id="toast" role="alert"></div>
+
 <script>
-let scene,camera,renderer,clock,player,mixerless;
-let collidables=[],enemies=[],bullets=[];
-let camYaw=0,camPitch=0.25,camDist=5.2,aiming=false;
-let moveVec={x:0,y:0},sprinting=false,crouching=false,jumping=false,vy=0;
-let hp=100,ammo=30,reserve=120,kills=0,totalEnemies=6,reloading=false,gameOver=false,started=false;
-const keys={};
+(() => {
+  'use strict';
 
-function initScene(){
-  scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x8fd3f4);
-  scene.fog=new THREE.Fog(0x8fd3f4,30,90);
-  camera=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,0.1,300);
-  renderer=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:false});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
-  renderer.setSize(innerWidth,innerHeight);
-  renderer.shadowMap.enabled=true;
-  const amb=new THREE.AmbientLight(0xcfe8ff,0.8); scene.add(amb);
-  const sun=new THREE.DirectionalLight(0xfff4d6,1.0);
-  sun.position.set(20,30,10); sun.castShadow=true;
-  sun.shadow.mapSize.set(1024,1024);
-  sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;
-  scene.add(sun);
-  const ground=new THREE.Mesh(new THREE.PlaneGeometry(160,160),new THREE.MeshLambertMaterial({color:0x4fa64f}));
-  ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; scene.add(ground);
-  buildMap();
-  player=buildCharacter(0x111111,0xb5352b,0xd8b48c);
-  player.position.set(0,0,10);
-  scene.add(player);
-  for(let i=0;i<totalEnemies;i++) spawnEnemy(i);
-  clock=new THREE.Clock();
-}
+  // NOTE: this is a UI-level lock only. Anyone can read this file,
+  // so it is not real security and never blocks closing the tab/app.
+  const SECRET = 'ana himar';
 
-function box(w,h,d,color,x,y,z,rotY){
-  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color}));
-  m.position.set(x,y,z); if(rotY)m.rotation.y=rotY; m.castShadow=true; m.receiveShadow=true;
-  scene.add(m); return m;
-}
-function addCollidable(mesh,w,d){
-  collidables.push({x:mesh.position.x,z:mesh.position.z,hw:w/2,hd:d/2});
-}
-function buildHouse(x,z,w,d,h,wallColor,roofColor,rot){
-  const base=box(w,h,d,wallColor,x,h/2,z,rot);
-  const roof=new THREE.Mesh(new THREE.ConeGeometry(Math.max(w,d)*0.75,1.6,4),new THREE.MeshLambertMaterial({color:roofColor}));
-  roof.position.set(x,h+0.8,z); roof.rotation.y=Math.PI/4+(rot||0); roof.castShadow=true; scene.add(roof);
-  addCollidable(base,w,d);
-}
-function buildWall(x,z,len,rot){
-  const w=box(len,2.2,0.6,0x7a6650,x,1.1,z,rot);
-  addCollidable(w, rot? 0.6:len, rot? len:0.6);
-}
-function buildCrate(x,z){
-  const c=box(1,1,1,0x8d8d8d,x,0.5,z);
-  addCollidable(c,1,1);
-}
-function buildMap(){
-  buildHouse(-14,-6,6,5,3.2,0xe8c14a,0xb5652c,0);
-  buildHouse(-8,10,5,5,3,0xe08b3a,0x7a3b1a,0.4);
-  buildHouse(12,-10,6,6,3.4,0xe8c14a,0x8a4a24,0.2);
-  buildHouse(16,8,5,4,3,0xe6a13a,0x7a3b1a,-0.3);
-  buildHouse(-2,-20,7,5,3.2,0xe08b3a,0xb5652c,0);
-  buildWall(-20,0,14,Math.PI/2);
-  buildWall(20,-4,16,Math.PI/2);
-  buildWall(0,20,20,0);
-  buildWall(6,-2,8,0.3);
-  for(const [x,z] of [[-4,2],[-3,4],[5,-4],[6,-3],[9,3],[-10,-2],[2,10],[3,11],[-14,14],[14,-16]]) buildCrate(x,z);
-}
+  const $ = (id) => document.getElementById(id);
+  const body = document.body;
+  const form = $('form'), pw = $('pw'), box = form;
+  const msg = $('msg'), toast = $('toast'), tag = $('tag');
+  const statusTxt = $('statusTxt');
+  const backBtn = $('backBtn'), exitBtn = $('exitBtn');
 
-function buildCharacter(cloth,pants,skin){
-  const g=new THREE.Group();
-  const torso=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.7,0.32),new THREE.MeshLambertMaterial({color:cloth}));
-  torso.position.y=1.15; torso.castShadow=true; g.add(torso);
-  const legs=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.7,0.3),new THREE.MeshLambertMaterial({color:pants}));
-  legs.position.y=0.45; legs.castShadow=true; g.add(legs);
-  const head=new THREE.Mesh(new THREE.BoxGeometry(0.34,0.34,0.34),new THREE.MeshLambertMaterial({color:skin}));
-  head.position.y=1.65; head.castShadow=true; g.add(head);
-  const pack=new THREE.Mesh(new THREE.BoxGeometry(0.38,0.42,0.2),new THREE.MeshLambertMaterial({color:0x2a2a2a}));
-  pack.position.set(0,1.15,-0.24); pack.castShadow=true; g.add(pack);
-  const gun=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.14,0.7),new THREE.MeshLambertMaterial({color:0x1c1c1c}));
-  gun.position.set(0.32,1.15,0.35); gun.castShadow=true; g.add(gun);
-  g.userData.gun=gun; g.userData.hp=100; g.userData.radius=0.4;
-  return g;
-}
-function spawnEnemy(i){
-  const e=buildCharacter(0x3a4a2a,0x2a2a2a,0xc99a6b);
-  const ang=(i/totalEnemies)*Math.PI*2;
-  const px=Math.cos(ang)*15, pz=Math.sin(ang)*15;
-  e.position.set(px,0,pz);
-  e.userData.state='patrol';
-  e.userData.wp=[new THREE.Vector3(px,0,pz),new THREE.Vector3(px+4*Math.cos(ang+1),0,pz+4*Math.sin(ang+1))];
-  e.userData.wpi=0;
-  e.userData.fireCd=0;
-  scene.add(e);
-  enemies.push(e);
-}
+  let unlocked = false;
+  let toastTimer;
 
-function resolveCollision(pos,radius){
-  for(const c of collidables){
-    const nx=Math.max(c.x-c.hw,Math.min(pos.x,c.x+c.hw));
-    const nz=Math.max(c.z-c.hd,Math.min(pos.z,c.z+c.hd));
-    const dx=pos.x-nx, dz=pos.z-nz;
-    const distSq=dx*dx+dz*dz;
-    if(distSq< radius*radius && distSq>0.0001){
-      const dist=Math.sqrt(distSq), push=(radius-dist);
-      pos.x+=dx/dist*push; pos.z+=dz/dist*push;
-    } else if(distSq<=0.0001){
-      pos.x+=radius; 
+  /* ---------- loader ---------- */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      $('loader').classList.add('done');
+      pw.focus({ preventScroll: true });
+    }, 1600);
+  });
+
+  /* ---------- helpers ---------- */
+  function showToast(text, good = false) {
+    toast.textContent = text;
+    toast.classList.toggle('good', good);
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  function shake() {
+    box.classList.remove('shake');
+    void box.offsetWidth; // restart animation
+    box.classList.add('shake');
+    if (navigator.vibrate) navigator.vibrate(120);
+  }
+
+  function setMsg(text, ok = false) {
+    msg.textContent = text;
+    msg.classList.toggle('ok', ok);
+  }
+
+  /* ---------- unlock ---------- */
+  function unlock() {
+    unlocked = true;
+    releaseGuard();
+    body.classList.replace('locked', 'unlocked');
+    statusTxt.textContent = 'ACCESS GRANTED';
+    tag.textContent = 'WELCOME — AUTHORIZATION CONFIRMED';
+    setMsg('تم التحقق بنجاح ✔ — تم تفعيل زر الخروج', true);
+    showToast('ACCESS GRANTED', true);
+    pw.value = '';
+    pw.disabled = true;
+    $('enterBtn').textContent = 'تم';
+    $('enterBtn').disabled = true;
+    backBtn.setAttribute('aria-label', 'رجوع');
+    exitBtn.setAttribute('aria-label', 'خروج');
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (unlocked) return;
+    if (pw.value === SECRET) {
+      unlock();
+    } else {
+      setMsg('الكود غير صحيح');
+      shake();
+      showToast('الكود غير صحيح');
+      pw.select();
     }
+  });
+
+  /* ---------- back / exit icons ---------- */
+  function guarded(action) {
+    return () => {
+      if (!unlocked) {
+        setMsg('أدخل الكود أولاً للمتابعة');
+        showToast('أدخل الكود أولاً 🔒');
+        shake();
+        pw.focus({ preventScroll: true });
+        return;
+      }
+      action();
+    };
   }
-}
 
-function updatePlayer(dt){
-  const speedBase=crouching?1.4:(sprinting?6.2:3.4);
-  const camDir=new THREE.Vector3(Math.sin(camYaw),0,Math.cos(camYaw));
-  const camRight=new THREE.Vector3(camDir.z,0,-camDir.x);
-  const wish=new THREE.Vector3();
-  wish.addScaledVector(camDir,-moveVec.y);
-  wish.addScaledVector(camRight,moveVec.x);
-  if(wish.lengthSq()>0.0001){
-    wish.normalize();
-    const targetAngle=Math.atan2(wish.x,wish.z);
-    player.rotation.y+= (function(a,b){let d=b-a;while(d>Math.PI)d-=Math.PI*2;while(d<-Math.PI)d+=Math.PI*2;return d;})(player.rotation.y,targetAngle)*Math.min(1,dt*10);
+  backBtn.addEventListener('click', guarded(() => {
+    if (history.length > 1) history.back();
+    else showToast('لا توجد صفحة سابقة', true);
+  }));
+
+  exitBtn.addEventListener('click', guarded(() => {
+    showToast('جاري الخروج…', true);
+    setTimeout(() => {
+      window.close(); // works only if the tab was opened by script
+      // Browsers may refuse; tell the user instead of forcing anything.
+      setTimeout(() => showToast('المتصفح منع الإغلاق التلقائي — أغلق التبويب يدوياً', true), 400);
+    }, 500);
+  }));
+
+  /* ---------- exit-gesture guards (in-page only, released on unlock) ---------- */
+  // 1) Phone back button / swipe-back gesture / browser back: re-push a guard entry.
+  let guardOn = false;
+  function armGuard() {
+    if (guardOn) return;
+    guardOn = true;
+    history.replaceState({ base: true }, '');
+    history.pushState({ guard: true }, '');
   }
-  const targetVel=wish.multiplyScalar(speedBase);
-  player.userData.vel = player.userData.vel || new THREE.Vector3();
-  player.userData.vel.lerp(targetVel,Math.min(1,dt*8));
-  const pos=player.position.clone();
-  pos.x+=player.userData.vel.x*dt; pos.z+=player.userData.vel.z*dt;
-  pos.x=Math.max(-38,Math.min(38,pos.x)); pos.z=Math.max(-38,Math.min(38,pos.z));
-  resolveCollision(pos,0.4);
-  player.position.x=pos.x; player.position.z=pos.z;
-  if(jumping && player.position.y<=0.001){ vy=5.2; jumping=false; }
-  vy-=14*dt; player.position.y+=vy*dt;
-  if(player.position.y<0){player.position.y=0; vy=0;}
-}
-
-function updateCamera(dt){
-  const targetDist= aiming? camDist*0.55 : camDist;
-  const targetH=1.5;
-  const dir=new THREE.Vector3(Math.sin(camYaw)*Math.cos(camPitch), Math.sin(camPitch), Math.cos(camYaw)*Math.cos(camPitch));
-  let dist=targetDist;
-  const origin=player.position.clone(); origin.y+=targetH;
-  const ray=new THREE.Raycaster(origin,dir.clone().negate().multiplyScalar(-1).normalize().negate().negate());
-  ray.set(origin, dir.clone().multiplyScalar(-1)); ray.far=targetDist;
-  const hits=ray.intersectObjects(scene.children.filter(o=>o.isMesh && o!==player),true);
-  if(hits.length && hits[0].distance<dist) dist=Math.max(1.2,hits[0].distance-0.3);
-  const camPos=origin.clone().addScaledVector(dir,-dist);
-  camera.position.lerp(camPos,Math.min(1,dt*12));
-  camera.lookAt(origin.x,origin.y+0.2,origin.z);
-}
-
-function updateEnemies(dt){
-  const pp=player.position;
-  for(const e of enemies){
-    if(e.userData.dead) continue;
-    const d=e.position.distanceTo(pp);
-    const st=e.userData.state;
-    if(st==='patrol'){
-      const wp=e.userData.wp[e.userData.wpi];
-      const dir=wp.clone().sub(e.position); dir.y=0;
-      if(dir.length()<0.3) e.userData.wpi=1-e.userData.wpi;
-      else{ dir.normalize(); e.position.addScaledVector(dir,1.1*dt); e.rotation.y=Math.atan2(dir.x,dir.z); }
-      if(d<14) e.userData.state='chase';
-    } else if(st==='chase'){
-      const dir=pp.clone().sub(e.position); dir.y=0;
-      if(dir.length()>0.1){dir.normalize(); e.rotation.y=Math.atan2(dir.x,dir.z);}
-      if(d>9) e.position.addScaledVector(dir,2.6*dt);
-      if(d<11) e.userData.state='attack';
-      if(d>20) e.userData.state='patrol';
-    } else if(st==='attack'){
-      const dir=pp.clone().sub(e.position); dir.y=0; dir.normalize();
-      e.rotation.y=Math.atan2(dir.x,dir.z);
-      e.userData.fireCd-=dt;
-      if(e.userData.fireCd<=0 && d<12){ e.userData.fireCd=1.1; if(!gameOver){hp=Math.max(0,hp-8); updateHUD(); flash(); if(hp<=0) endGame(false);} }
-      if(d>13) e.userData.state='chase';
-    }
+  function releaseGuard() {
+    if (!guardOn) return;
+    guardOn = false;
+    if (history.state && history.state.guard) history.back(); // drop our extra entry
   }
-}
+  window.addEventListener('popstate', () => {
+    if (unlocked || !guardOn) return;
+    history.pushState({ guard: true }, '');           // stay on the page
+    setMsg('أدخل الكود أولاً للمتابعة');
+    showToast('الرجوع مقفل — أدخل الكود 🔒');
+    shake();
+  });
+  armGuard();
 
-function flash(){
-  const m=document.getElementById('msg'); m.style.opacity='1'; m.textContent='-8 HP';
-  setTimeout(()=>m.style.opacity='0',250);
-}
-
-function fire(){
-  if(reloading||gameOver||!started) return;
-  if(ammo<=0){ reload(); return; }
-  ammo--; updateHUD();
-  const dir=new THREE.Vector3(); camera.getWorldDirection(dir);
-  const ray=new THREE.Raycaster(camera.position,dir,0,60);
-  const targets=[]; enemies.forEach(e=>{if(!e.userData.dead) e.traverse(o=>{if(o.isMesh)targets.push(o); o.userData.owner=e;});});
-  const hits=ray.intersectObjects(targets,false);
-  if(hits.length){
-    let e=hits[0].object; while(e && !e.userData.hasOwnProperty('hp')) e=e.parent;
-    if(e){ e.userData.hp-=34; if(e.userData.hp<=0 && !e.userData.dead){ e.userData.dead=true; scene.remove(e); kills++; updateHUD(); if(kills>=totalEnemies) endGame(true); } }
+  // 2) Fullscreen: ask on first touch/click; if the user leaves it, warn and re-enter on next tap.
+  const fsEl = document.documentElement;
+  const inFS = () => document.fullscreenElement || document.webkitFullscreenElement;
+  function enterFS() {
+    if (unlocked || inFS()) return;
+    const req = fsEl.requestFullscreen || fsEl.webkitRequestFullscreen;
+    if (req) { try { const r = req.call(fsEl, { navigationUI: 'hide' }); if (r && r.catch) r.catch(() => {}); } catch (_) {} }
   }
-  camPitch=Math.min(0.6,camPitch+0.015);
-}
+  ['pointerdown', 'keydown'].forEach((ev) => window.addEventListener(ev, enterFS, { passive: true }));
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach((ev) =>
+    document.addEventListener(ev, () => {
+      if (!unlocked && !inFS()) { showToast('ملء الشاشة مقفل — المس الشاشة للعودة 🔒'); shake(); }
+    }));
 
-function reload(){
-  if(reloading||ammo===30||reserve<=0) return;
-  reloading=true;
-  document.getElementById('ammoTxt').textContent='...';
-  setTimeout(()=>{
-    const need=30-ammo; const take=Math.min(need,reserve);
-    ammo+=take; reserve-=take; reloading=false; updateHUD();
-  },1000);
-}
+  // 3) Refresh / navigation shortcuts and long-press menu while locked.
+  window.addEventListener('keydown', (e) => {
+    if (unlocked) return;
+    const k = e.key.toLowerCase();
+    const blocked = k === 'f5' || (e.ctrlKey || e.metaKey) && (k === 'r' || k === 'l') ||
+                    (e.altKey && (k === 'arrowleft' || k === 'arrowright')) ||
+                    (k === 'backspace' && document.activeElement !== pw);
+    if (blocked) { e.preventDefault(); showToast('مقفل — أدخل الكود أولاً 🔒'); shake(); }
+  });
+  window.addEventListener('contextmenu', (e) => { if (!unlocked) e.preventDefault(); });
 
-function updateHUD(){
-  document.getElementById('hpbar').style.width=Math.max(0,hp)+'%';
-  document.getElementById('ammoTxt').textContent=ammo+'/'+reserve;
-  document.getElementById('killCount').textContent='Kills: '+kills+'/'+totalEnemies;
-}
+  // Escape key follows the same rule as the close icon
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') guarded(() => exitBtn.click())();
+  });
+})();
 
-function endGame(win){
-  gameOver=true;
-  document.getElementById('endScreen').classList.remove('hide');
-  document.getElementById('endTitle').textContent=win?'VICTORY':'GAME OVER';
-  document.getElementById('endTitle').style.color=win?'#3bd1ff':'#ff3b3b';
-  document.getElementById('endText').textContent=win?'لقد قضيت على جميع الأعداء.':'لقد سقطت في ساحة المعركة.';
-}
-
-function animate(){
-  requestAnimationFrame(animate);
-  const dt=Math.min(0.05,clock.getDelta());
-  if(started && !gameOver){ updatePlayer(dt); updateEnemies(dt); }
-  if(started) updateCamera(dt);
-  renderer.render(scene,camera);
-}
-
-/* ---- input ---- */
-window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
-window.addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true; if(e.key===' ')jumping=true; if(e.key==='Shift')sprinting=true; if(e.key.toLowerCase()==='c')crouching=!crouching; if(e.key.toLowerCase()==='r')reload();});
-window.addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false; if(e.key==='Shift')sprinting=false;});
-function pollKeys(){
-  let x=0,y=0;
-  if(keys['w'])y-=1; if(keys['s'])y+=1; if(keys['a'])x-=1; if(keys['d'])x+=1;
-  const len=Math.hypot(x,y); if(len>0){x/=len;y/=len;}
-  if(!joyActive){ moveVec.x=x; moveVec.y=y; }
-  requestAnimationFrame(pollKeys);
-}
-pollKeys();
-
-let joyActive=false,joyId=null,joyCenter={x:0,y:0};
-const joyzone=document.getElementById('joyzone'),joybase=document.getElementById('joybase'),joyknob=document.getElementById('joyknob');
-function joyStart(id,x,y){ joyActive=true; joyId=id; joyCenter={x,y}; joybase.style.left=(x-50)+'px'; joybase.style.top=(y-50)+'px'; joybase.style.display='block'; }
-function joyMove(x,y){ let dx=x-joyCenter.x, dy=y-joyCenter.y; const m=Math.hypot(dx,dy),max=50; if(m>max){dx=dx/m*max;dy=dy/m*max;} joyknob.style.left=(28+dx)+'px'; joyknob.style.top=(28+dy)+'px'; moveVec.x=dx/max; moveVec.y=dy/max; }
-function joyEnd(){ joyActive=false; joybase.style.display='none'; joyknob.style.left='28px'; joyknob.style.top='28px'; moveVec.x=0; moveVec.y=0; }
-joyzone.addEventListener('touchstart',e=>{const t=e.changedTouches[0]; joyStart(t.identifier,t.clientX,t.clientY);},{passive:true});
-joyzone.addEventListener('touchmove',e=>{for(const t of e.changedTouches){if(t.identifier===joyId)joyMove(t.clientX,t.clientY);}},{passive:true});
-joyzone.addEventListener('touchend',e=>{for(const t of e.changedTouches){if(t.identifier===joyId)joyEnd();}},{passive:true});
-
-const camzone=document.getElementById('camzone');
-let dragId=null,lastX=0,lastY=0;
-function rotStart(id,x,y){dragId=id;lastX=x;lastY=y;}
-function rotMove(x,y){ const dx=x-lastX, dy=y-lastY; lastX=x; lastY=y; camYaw-=dx*0.005; camPitch=Math.max(-0.3,Math.min(0.6,camPitch-dy*0.004)); }
-camzone.addEventListener('touchstart',e=>{const t=e.changedTouches[0]; rotStart(t.identifier,t.clientX,t.clientY);},{passive:true});
-camzone.addEventListener('touchmove',e=>{for(const t of e.changedTouches){if(t.identifier===dragId)rotMove(t.clientX,t.clientY);}},{passive:true});
-camzone.addEventListener('touchend',e=>{for(const t of e.changedTouches){if(t.identifier===dragId)dragId=null;}},{passive:true});
-let mouseDown=false;
-camzone.addEventListener('mousedown',e=>{mouseDown=true;lastX=e.clientX;lastY=e.clientY;});
-window.addEventListener('mousemove',e=>{if(mouseDown)rotMove(e.clientX,e.clientY);});
-window.addEventListener('mouseup',()=>mouseDown=false);
-
-let fireHold=null;
-const fireBtn=document.getElementById('fireBtn');
-fireBtn.addEventListener('touchstart',e=>{e.preventDefault(); fire(); fireHold=setInterval(fire,140);},{passive:false});
-fireBtn.addEventListener('mousedown',()=>{fire(); fireHold=setInterval(fire,140);});
-['touchend','touchcancel','mouseup','mouseleave'].forEach(ev=>fireBtn.addEventListener(ev,()=>clearInterval(fireHold)));
-
-document.getElementById('aimBtn').addEventListener('click',function(){ aiming=!aiming; this.classList.toggle('active',aiming); });
-document.getElementById('jumpBtn').addEventListener('click',()=>jumping=true);
-document.getElementById('reloadBtn').addEventListener('click',reload);
-const crouchBtn=document.getElementById('crouchBtn');
-crouchBtn.addEventListener('click',function(){crouching=!crouching;this.classList.toggle('active',crouching);});
-
-document.getElementById('playBtn').addEventListener('click',()=>{
-  document.getElementById('menu').classList.add('hide');
-  document.getElementById('hud').classList.remove('hide');
-  started=true;
-});
-document.getElementById('howBtn').addEventListener('click',()=>{
-  const h=document.getElementById('howText'); h.style.display= h.style.display==='none'?'block':'none';
-});
-document.getElementById('restartBtn').addEventListener('click',()=>location.reload());
-
-initScene();
-updateHUD();
-animate();
 </script>
 </body>
 </html>
